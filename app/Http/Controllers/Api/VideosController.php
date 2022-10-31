@@ -3,31 +3,36 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\VideosRequest;
 use App\Models\Video;
 use Illuminate\Http\Request;
 
 class VideosController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return Video::all();
+
+        if (!$request->query('search')) {
+            return Video::all();
+        }
+
+        return $this->searchParameterUrl($request->query('search'));
+
     }
 
-    public function store(Request $request)
+    private function searchParameterUrl($wordToSearch)
     {
-        $request->validate(
-            [
-                'titulo' => ['required', 'min:4']
-            ],
-            [
-                'descricao' => ['required', 'min:4']
-            ],
-            [
-                'url' => ['required', 'min:5']
-            ]
-        );
 
-        return response(Video::create($request->all())->json, 201);
+       $resultOfSearch = Video::query()->where("titulo","LIKE", "%$wordToSearch%")->get();
+
+
+       return $resultOfSearch;
+    }
+
+
+    public function store(VideosRequest $request)
+    {
+        return response(Video::create($request->all()), 200);
     }
 
     public function show(Request $request)
@@ -35,7 +40,7 @@ class VideosController extends Controller
         return Video::findOrFail($request->video);
     }
 
-    public function update(Video $video, Request $request)
+    public function update(Video $video, VideosRequest $request)
     {
        $video->fill($request->all())->save();
         /*
@@ -43,10 +48,9 @@ class VideosController extends Controller
         return Video::findOrFail($request->id);*/
     }
 
-    public function destroy(Request $request)
+    public function destroy(Video $video, Request $request)
     {
-        $video = Video::findOrFail($request->video);
-        Video::destroy($video);
+        $video->deleteOrFail();
         return response()->noContent();
     }
 }

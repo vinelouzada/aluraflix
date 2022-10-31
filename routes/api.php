@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CategoriaController;
 use App\Http\Controllers\Api\VideosController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,5 +27,15 @@ Route::post("/videos", [VideosController::class,'store']);
 Route::match(['PUT', 'PATCH'],'/videos/{video}', [VideosController::class, 'update']);
 Route::delete('/videos/{video}', [VideosController::class, 'destroy']);
 
-//Route::resource("/videos", VideosController::class);
+
+Route::get("/categorias", [CategoriaController::class,'index']);
+Route::post("/categorias",[CategoriaController::class,'store']);
+Route::get("/categorias/{categoria}",[CategoriaController::class,'show']);
+Route::match(['PUT','PATCH'], '/categorias/{categoria}',[CategoriaController::class,'update']);
+Route::delete("/categorias/{categoria}",[CategoriaController::class,'destroy']);
+
+
+Route::get("/categorias/{categoria}/videos",[CategoriaController::class,'search']);
+
+
 

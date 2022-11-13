@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\CategoriaController;
+use App\Http\Controllers\Api\CategoriasController;
 use App\Http\Controllers\Api\VideosController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,14 +28,14 @@ Route::match(['PUT', 'PATCH'],'/videos/{video}', [VideosController::class, 'upda
 Route::delete('/videos/{video}', [VideosController::class, 'destroy']);
 
 
-Route::get("/categorias", [CategoriaController::class,'index']);
-Route::post("/categorias",[CategoriaController::class,'store']);
-Route::get("/categorias/{categoria}",[CategoriaController::class,'show']);
-Route::match(['PUT','PATCH'], '/categorias/{categoria}',[CategoriaController::class,'update']);
-Route::delete("/categorias/{categoria}",[CategoriaController::class,'destroy']);
+Route::get("/categorias", [CategoriasController::class,'index']);
+Route::post("/categorias",[CategoriasController::class,'store']);
+Route::get("/categorias/{categoria}",[CategoriasController::class,'show']);
+Route::match(['PUT','PATCH'], '/categorias/{categoria}',[CategoriasController::class,'update']);
+Route::delete("/categorias/{categoria}",[CategoriasController::class,'destroy']);
 
 
-Route::get("/categorias/{categoria}/videos",[CategoriaController::class,'search']);
+Route::get("/categorias/{categoria}/videos",[CategoriasController::class,'search']);
 
 
 

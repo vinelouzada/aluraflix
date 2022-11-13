@@ -53,6 +53,6 @@ class CategoriaRequest extends FormRequest
 
     public function valida()
     {
-        
+
     }
 }

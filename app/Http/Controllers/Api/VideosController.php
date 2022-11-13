@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 class VideosController extends Controller
 {
+
     public function index(Request $request)
     {
 
@@ -32,7 +33,7 @@ class VideosController extends Controller
 
     public function store(VideosRequest $request)
     {
-        return response(Video::create($request->all()), 200);
+        return response(Video::create($request->all()), 201);
     }
 
     public function show(Request $request)
@@ -42,10 +43,12 @@ class VideosController extends Controller
 
     public function update(Video $video, VideosRequest $request)
     {
-       $video->fill($request->all())->save();
+        $video->fill($request->all())->save();
+
         /*
-        Video::findOrFail($request->id)->update($request->all());
-        return Video::findOrFail($request->id);*/
+        Video::findOrFail($request->id)->update($request->all());*/
+
+        return $video;
     }
 
     public function destroy(Video $video, Request $request)

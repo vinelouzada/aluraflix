@@ -9,7 +9,7 @@ use App\Models\Video;
 use Illuminate\Http\Request;
 
 
-class CategoriaController extends Controller
+class CategoriasController extends Controller
 {
     public function index()
     {
@@ -27,7 +27,7 @@ class CategoriaController extends Controller
         return Categoria::findorFail($request->categoria);
     }
 
-    public function update(CategoriaRequest $categoria, Request $request)
+    public function update(Categoria $categoria, CategoriaRequest $request)
     {
         $categoria->fill($request->all())->save();
 

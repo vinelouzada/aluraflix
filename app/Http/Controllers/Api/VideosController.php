@@ -12,16 +12,17 @@ class VideosController extends Controller
 
     public function index(Request $request)
     {
+        $query = Video::query();
 
-        if (!$request->query('search')) {
-            return Video::all();
+        if ($request->has('search')) {
+            $wordToSearch = $request->query('search');
+            $query->where("titulo", "LIKE", "%$wordToSearch%");
         }
 
-        return $this->searchParameterUrl($request->query('search'));
-
+        return $query->paginate(5);
     }
 
-    private function searchParameterUrl($wordToSearch)
+    private function searchParameterUrl(string $wordToSearch)
     {
 
        $resultOfSearch = Video::query()->where("titulo","LIKE", "%$wordToSearch%")->get();

@@ -22,7 +22,6 @@ class VideosControllerTest extends TestCase
 
         #Assert
         $response->assertStatus(200);
-        $response->assertJsonCount(2);
     }
 
 

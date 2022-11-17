@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\VideosRequest;
 use App\Models\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VideosController extends Controller
 {
@@ -22,15 +23,10 @@ class VideosController extends Controller
         return $query->paginate(5);
     }
 
-    private function searchParameterUrl(string $wordToSearch)
+    public function free()
     {
-
-       $resultOfSearch = Video::query()->where("titulo","LIKE", "%$wordToSearch%")->get();
-
-
-       return $resultOfSearch;
+        return DB::table('videos')->orderBy("id",'asc')->take(3)->get();
     }
-
 
     public function store(VideosRequest $request)
     {

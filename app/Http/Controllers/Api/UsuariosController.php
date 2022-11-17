@@ -26,7 +26,7 @@ class UsuariosController extends Controller
         $credenciais = $request->only(["email", "password"]);
 
         if(Auth::attempt($credenciais) === false){
-            return response()->json("Unauthorized", 401);
+            return response()->json("Usuário ou senha inválidos", 401);
         }
 
         $usuario = Auth::user();
